@@ -20,6 +20,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/okteto/okteto/pkg/format"
 	"github.com/okteto/okteto/pkg/k8s/services"
 	"github.com/okteto/okteto/pkg/model"
 	"github.com/okteto/okteto/pkg/okteto"
@@ -233,7 +234,7 @@ func Test_reDeploySvc(t *testing.T) {
 				if d.Labels[model.StackNameLabel] != tt.stack.Name {
 					t.Fatal()
 				}
-				if d.Labels[model.DeployedByLabel] != tt.stack.Name {
+				if d.Labels[model.DeployedByLabel] != format.ResourceK8sMetaString(tt.stack.Name) {
 					t.Fatal()
 				}
 			}
@@ -245,7 +246,7 @@ func Test_reDeploySvc(t *testing.T) {
 				if sfs.Labels[model.StackNameLabel] != tt.stack.Name {
 					t.Fatal()
 				}
-				if sfs.Labels[model.DeployedByLabel] != tt.stack.Name {
+				if sfs.Labels[model.DeployedByLabel] != format.ResourceK8sMetaString(tt.stack.Name) {
 					t.Fatal()
 				}
 
