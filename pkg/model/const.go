@@ -204,6 +204,9 @@ const (
 	// OktetoNamespaceEnvVar defines the namespace the user is using
 	OktetoNamespaceEnvVar = "OKTETO_NAMESPACE"
 
+	// OktetoDomainEnvVar defines the domain the user is using
+	OktetoDomainEnvVar = "OKTETO_DOMAIN"
+
 	// OktetoLanguageEnvVar defines the language of the dev
 	OktetoLanguageEnvVar = "OKTETO_LANGUAGE"
 
