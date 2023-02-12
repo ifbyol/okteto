@@ -32,6 +32,7 @@ import (
 	"github.com/okteto/okteto/pkg/config"
 	"github.com/okteto/okteto/pkg/constants"
 	"github.com/okteto/okteto/pkg/devenvironment"
+	"github.com/okteto/okteto/pkg/divert"
 	oktetoErrors "github.com/okteto/okteto/pkg/errors"
 	"github.com/okteto/okteto/pkg/format"
 
@@ -290,8 +291,8 @@ func (dc *destroyCommand) runDestroy(ctx context.Context, opts *Options) error {
 	if manifest.Context == "" {
 		manifest.Context = okteto.Context().Name
 	}
-	if manifest.Namespace == okteto.Context().Namespace {
-		manifest.Namespace = okteto.Context().Namespace
+	if manifest.Namespace == "" {
+		manifest.Namespace = namespace
 	}
 	os.Setenv(constants.OktetoNameEnvVar, opts.Name)
 
@@ -330,6 +331,24 @@ func (dc *destroyCommand) runDestroy(ctx context.Context, opts *Options) error {
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, os.Interrupt)
 	exit := make(chan error, 1)
+
+	if manifest.Deploy != nil && manifest.Deploy.Divert != nil && manifest.Deploy.Divert.Namespace != manifest.Namespace {
+		oktetoLog.SetStage("Destroying divert configuration")
+		c, _, err := dc.k8sClientProvider.Provide(okteto.Context().Cfg)
+		if err != nil {
+			return err
+		}
+		driver, err := divert.New(ctx, manifest, c)
+		if err != nil {
+			return err
+		}
+
+		if err := driver.Destroy(ctx); err != nil {
+			return err
+		}
+		oktetoLog.Success("Divert from '%s' successfully destroyed", manifest.Deploy.Divert.Namespace)
+		oktetoLog.SetStage("")
+	}
 
 	go func() {
 		for _, command := range manifest.Destroy {

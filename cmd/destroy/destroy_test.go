@@ -34,6 +34,11 @@ import (
 )
 
 var fakeManifest *model.Manifest = &model.Manifest{
+	Deploy: &model.DeployInfo{
+		Divert: &model.DivertDeploy{
+			Namespace: "staging",
+		},
+	},
 	Destroy: []model.DeployCommand{
 		{
 			Name:    "printenv",
