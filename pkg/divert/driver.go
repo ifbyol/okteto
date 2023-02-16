@@ -33,7 +33,7 @@ type Driver interface {
 	ApplyNamespaceToProxy() string
 }
 
-func New(ctx context.Context, m *model.Manifest, c kubernetes.Interface) (Driver, error) {
+func New(m *model.Manifest, c kubernetes.Interface) (Driver, error) {
 	if !okteto.IsOkteto() {
 		return nil, oktetoErrors.ErrDivertNotSupported
 	}
@@ -50,7 +50,7 @@ func New(ctx context.Context, m *model.Manifest, c kubernetes.Interface) (Driver
 		}, nil
 	}
 
-	ic, err := virtualservices.GetIstioClient(ctx)
+	ic, err := virtualservices.GetIstioClient()
 	if err != nil {
 		return nil, fmt.Errorf("error creating istio client: %s", err.Error())
 	}

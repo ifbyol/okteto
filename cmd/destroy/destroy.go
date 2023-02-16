@@ -338,7 +338,7 @@ func (dc *destroyCommand) runDestroy(ctx context.Context, opts *Options) error {
 		if err != nil {
 			return err
 		}
-		driver, err := divert.New(ctx, manifest, c)
+		driver, err := divert.New(manifest, c)
 		if err != nil {
 			return err
 		}

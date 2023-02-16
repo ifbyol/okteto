@@ -14,15 +14,13 @@
 package virtualservices
 
 import (
-	"context"
-
 	"github.com/okteto/okteto/pkg/okteto"
 	istioclientset "istio.io/client-go/pkg/clientset/versioned"
 	"k8s.io/client-go/tools/clientcmd"
 )
 
 // GetIstioClient returns a client for istio
-func GetIstioClient(ctx context.Context) (*istioclientset.Clientset, error) {
+func GetIstioClient() (*istioclientset.Clientset, error) {
 	octx := okteto.Context()
 	clientConfig := clientcmd.NewDefaultClientConfig(*octx.Cfg, nil)
 

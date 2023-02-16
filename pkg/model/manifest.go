@@ -778,7 +778,7 @@ func (m *Manifest) validateDivert() error {
 			return fmt.Errorf("the field 'deploy.divert.service' is mandatory")
 		}
 	default:
-		return fmt.Errorf("the divert diver '%s' isn't supported", m.Deploy.Divert.Driver)
+		return fmt.Errorf("the divert driver '%s' isn't supported", m.Deploy.Divert.Driver)
 	}
 	return nil
 }

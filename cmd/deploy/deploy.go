@@ -345,7 +345,7 @@ func (dc *DeployCommand) RunDeploy(ctx context.Context, deployOptions *Options) 
 
 	dc.Proxy.SetName(format.ResourceK8sMetaString(deployOptions.Name))
 	if deployOptions.Manifest.Deploy.Divert != nil {
-		driver, err := divert.New(ctx, deployOptions.Manifest, c)
+		driver, err := divert.New(deployOptions.Manifest, c)
 		if err != nil {
 			return err
 		}
@@ -624,7 +624,7 @@ func (dc *DeployCommand) deployDivert(ctx context.Context, opts *Options) error 
 		return err
 	}
 
-	driver, err := divert.New(ctx, opts.Manifest, c)
+	driver, err := divert.New(opts.Manifest, c)
 	if err != nil {
 		return err
 	}

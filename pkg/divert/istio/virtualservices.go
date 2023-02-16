@@ -108,9 +108,7 @@ func translateDivertVirtualService(m *model.Manifest, vs *istioV1beta1.VirtualSe
 			httpRoutes = append(httpRoutes, httpRoute)
 		}
 	}
-	for i := range result.Spec.Http {
-		httpRoutes = append(httpRoutes, result.Spec.Http[i])
-	}
+	httpRoutes = append(httpRoutes, result.Spec.Http...)
 	result.Spec.Http = httpRoutes
 	return result
 }

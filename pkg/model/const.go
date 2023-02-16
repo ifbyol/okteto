@@ -295,6 +295,6 @@ const (
 	// OktetoDivertIstioDriver is the divert driver for istio
 	OktetoDivertIstioDriver = "istio"
 
-	//OktetoDivertHeader the header used by okteto to divert traffic
+	// OktetoDivertHeader the header used by okteto to divert traffic
 	OktetoDivertHeader = "x-okteto-divert"
 )
